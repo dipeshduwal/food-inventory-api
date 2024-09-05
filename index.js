@@ -8,10 +8,6 @@ const port = 3000;
 
 app.use(express.json());
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
-
 //array to store food items
 
 let foodItems = [];
@@ -74,3 +70,8 @@ app.delete('/food/:id', (req, res) => {
     }
 });
 
+//middleware
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
