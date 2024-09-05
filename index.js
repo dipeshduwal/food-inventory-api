@@ -47,3 +47,18 @@ app.get('/food/:id', (req, res) => {
     }
 });
 
+//update food item
+app.put('/food/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const foodItem = foodItems.find(item => item.id === id);
+
+    if (foodItem) {
+        foodItem.name = req.body.name || foodItem.name;
+        foodItem.quantity = req.body.quantity || foodItem.quantity;
+        res.json(foodItem);
+    } else {
+        res.status(404).send('Food item not found');
+    }
+});
+
+
