@@ -61,4 +61,16 @@ app.put('/food/:id', (req, res) => {
     }
 });
 
+//delete a food item
+app.delete('/food/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = foodItems.findIndex(item => item.id === id);
+
+    if (index !== -1) {
+        foodItems.splice(index, 1);
+        res.status(204).send();
+    } else {
+        res.status(404).send('Food item not found');
+    }
+});
 
