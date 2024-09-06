@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const db = require('./database');  // Import SQLite3 database
 
 //Middleware to parse incoming JSON requests
 //applicationlevelmiddleware
@@ -11,13 +12,13 @@ app.use(express.json());
 
 //array to store food items
 
-let foodItems = [{ id: 1, name: "Apple", quantity: 10 },
+/*let foodItems = [{ id: 1, name: "Apple", quantity: 10 },
     { id: 2, name: "Banana", quantity: 5 },
-    { id: 3, name: "Carrot", quantity: 8 }];
+    { id: 3, name: "Carrot", quantity: 8 }];*/
 
 //route to handle create food item
 
-app.post('/food', (req, res) => {
+/*app.post('/food', (req, res) => {
     const newItem = {
         id: foodItems.length + 1,
         name: req.body.name,
@@ -25,14 +26,31 @@ app.post('/food', (req, res) => {
     };
     foodItems.push(newItem);
     res.status(201).json(newItem);
+});*/
+
+// Create a food item (POST)
+app.post('/food', (req, res) => {
+    const { name, quantity } = req.body;
+
+    const query = `INSERT INTO food_items (name, quantity) VALUES (?, ?)`;
+    db.run(query, [name, quantity], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(201).json({
+            id: this.lastID,
+            name,
+            quantity
+        });
+    });
 });
 
 
 //get all food items
 
-app.get('/food', (req, res) => {
+/*app.get('/food', (req, res) => {
     res.json(foodItems);
-});
+});*/
 
 //get specific food item
 app.get('/food/:id', (req, res) => {
