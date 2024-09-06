@@ -75,6 +75,23 @@ app.get('/food', (req, res) => {
     }
 });*/
 
+// Get a specific food item by ID (GET)
+app.get('/food/:id', (req, res) => {
+    const id = req.params.id;
+    const query = `SELECT * FROM food_items WHERE id = ?`;
+
+    db.get(query, [id], (err, row) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        if (row) {
+            res.json(row);
+        } else {
+            res.status(404).json({ error: 'Food item not found' });
+        }
+    });
+});
+
 //update food item
 app.put('/food/:id', (req, res) => {
     const id = parseInt(req.params.id);
