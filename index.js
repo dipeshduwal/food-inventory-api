@@ -5,12 +5,15 @@ const app = express();
 const port = 3000;
 
 //Middleware to parse incoming JSON requests
+//applicationlevelmiddleware
 
 app.use(express.json());
 
 //array to store food items
 
-let foodItems = [];
+let foodItems = [{ id: 1, name: "Apple", quantity: 10 },
+    { id: 2, name: "Banana", quantity: 5 },
+    { id: 3, name: "Carrot", quantity: 8 }];
 
 //route to handle create food item
 
@@ -33,7 +36,7 @@ app.get('/food', (req, res) => {
 
 //get specific food item
 app.get('/food/:id', (req, res) => {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id); //request parameter id
     const foodItem = foodItems.find(item => item.id === id);
 
     if (foodItem) {
