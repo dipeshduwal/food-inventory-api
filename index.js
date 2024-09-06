@@ -45,15 +45,26 @@ app.post('/food', (req, res) => {
     });
 });
 
-
 //get all food items
 
 /*app.get('/food', (req, res) => {
     res.json(foodItems);
 });*/
 
+// Get all food items (GET)
+app.get('/food', (req, res) => {
+    const query = `SELECT * FROM food_items`;
+
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+    });
+});
+
 //get specific food item
-app.get('/food/:id', (req, res) => {
+/*app.get('/food/:id', (req, res) => {
     const id = parseInt(req.params.id); //request parameter id
     const foodItem = foodItems.find(item => item.id === id);
 
@@ -62,7 +73,7 @@ app.get('/food/:id', (req, res) => {
     } else {
         res.status(404).send('Food item not found');
     }
-});
+});*/
 
 //update food item
 app.put('/food/:id', (req, res) => {
