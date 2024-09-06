@@ -125,7 +125,7 @@ app.put('/food/:id', (req, res) => {
 });
 
 //delete a food item
-app.delete('/food/:id', (req, res) => {
+/*app.delete('/food/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = foodItems.findIndex(item => item.id === id);
 
@@ -135,6 +135,23 @@ app.delete('/food/:id', (req, res) => {
     } else {
         res.status(404).send('Food item not found');
     }
+});*/
+
+// Delete a food item (DELETE)
+app.delete('/food/:id', (req, res) => {
+    const id = req.params.id;
+    const query = `DELETE FROM food_items WHERE id = ?`;
+
+    db.run(query, [id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        if (this.changes === 0) {
+            res.status(404).json({ error: 'Food item not found' });
+        } else {
+            res.status(204).send();
+        }
+    });
 });
 
 //middleware
