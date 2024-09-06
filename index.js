@@ -93,7 +93,7 @@ app.get('/food/:id', (req, res) => {
 });
 
 //update food item
-app.put('/food/:id', (req, res) => {
+/*app.put('/food/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const foodItem = foodItems.find(item => item.id === id);
 
@@ -104,6 +104,24 @@ app.put('/food/:id', (req, res) => {
     } else {
         res.status(404).send('Food item not found');
     }
+});*/
+
+// Update a food item (PUT)
+app.put('/food/:id', (req, res) => {
+    const id = req.params.id;
+    const { name, quantity } = req.body;
+
+    const query = `UPDATE food_items SET name = ?, quantity = ? WHERE id = ?`;
+    db.run(query, [name, quantity, id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        if (this.changes === 0) {
+            res.status(404).json({ error: 'Food item not found' });
+        } else {
+            res.json({ id, name, quantity });
+        }
+    });
 });
 
 //delete a food item
