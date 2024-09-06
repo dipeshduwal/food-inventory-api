@@ -1,4 +1,4 @@
-**Food Inventory REST API** <br> This is a simple API built using Node.js, Express, and SQLite3. The API allows you to perform basic CRUD operations (Create, Read, Update, Delete) on a food inventory stored in an SQLite3 database.
+**Food Inventory REST API**: <br> This is a simple API built using Node.js, Express, and SQLite3. The API allows you to perform basic CRUD operations (Create, Read, Update, Delete) on a food inventory stored in an SQLite3 database.
 
 **Features:**<br>
 Create: Add new food items to the inventory.<br>
