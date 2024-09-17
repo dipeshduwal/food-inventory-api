@@ -10,6 +10,24 @@ const db = require('./database');  // Import SQLite3 database
 
 app.use(express.json());
 
+// Validation middleware for food items
+const validateFoodItem = (req, res, next) => {
+    const { name, quantity } = req.body;
+
+    // Check if 'name' is a non-empty string
+    if (typeof name !== 'string' || name.trim() === '') {
+        return res.status(400).json({ error: 'Name is required and must be a non-empty string.' });
+    }
+
+    // Check if 'quantity' is a positive integer
+    if (typeof quantity !== 'number' || quantity <= 0 || !Number.isInteger(quantity)) {
+        return res.status(400).json({ error: 'Quantity is required and must be a positive integer.' });
+    }
+
+    // If all validations pass, proceed to the next middleware or route handler
+    next();
+};
+
 // Create a food item (POST)
 app.post('/food', (req, res) => {
     const { name, quantity } = req.body;
