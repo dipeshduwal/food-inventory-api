@@ -10,24 +10,6 @@ const db = require('./database');  // Import SQLite3 database
 
 app.use(express.json());
 
-//array to store food items
-
-/*let foodItems = [{ id: 1, name: "Apple", quantity: 10 },
-    { id: 2, name: "Banana", quantity: 5 },
-    { id: 3, name: "Carrot", quantity: 8 }];*/
-
-//route to handle create food item
-
-/*app.post('/food', (req, res) => {
-    const newItem = {
-        id: foodItems.length + 1,
-        name: req.body.name,
-        quantity: req.body.quantity
-    };
-    foodItems.push(newItem);
-    res.status(201).json(newItem);
-});*/
-
 // Create a food item (POST)
 app.post('/food', (req, res) => {
     const { name, quantity } = req.body;
@@ -45,12 +27,6 @@ app.post('/food', (req, res) => {
     });
 });
 
-//get all food items
-
-/*app.get('/food', (req, res) => {
-    res.json(foodItems);
-});*/
-
 // Get all food items (GET)
 app.get('/food', (req, res) => {
     const query = `SELECT * FROM food_items`;
@@ -62,18 +38,6 @@ app.get('/food', (req, res) => {
         res.json(rows);
     });
 });
-
-//get specific food item
-/*app.get('/food/:id', (req, res) => {
-    const id = parseInt(req.params.id); //request parameter id
-    const foodItem = foodItems.find(item => item.id === id);
-
-    if (foodItem) {
-        res.json(foodItem);
-    } else {
-        res.status(404).send('Food item not found');
-    }
-});*/
 
 // Get a specific food item by ID (GET)
 app.get('/food/:id', (req, res) => {
@@ -91,20 +55,6 @@ app.get('/food/:id', (req, res) => {
         }
     });
 });
-
-//update food item
-/*app.put('/food/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const foodItem = foodItems.find(item => item.id === id);
-
-    if (foodItem) {
-        foodItem.name = req.body.name || foodItem.name;
-        foodItem.quantity = req.body.quantity || foodItem.quantity;
-        res.json(foodItem);
-    } else {
-        res.status(404).send('Food item not found');
-    }
-});*/
 
 // Update a food item (PUT)
 app.put('/food/:id', (req, res) => {
@@ -124,19 +74,6 @@ app.put('/food/:id', (req, res) => {
     });
 });
 
-//delete a food item
-/*app.delete('/food/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const index = foodItems.findIndex(item => item.id === id);
-
-    if (index !== -1) {
-        foodItems.splice(index, 1);
-        res.status(204).send();
-    } else {
-        res.status(404).send('Food item not found');
-    }
-});*/
-
 // Delete a food item (DELETE)
 app.delete('/food/:id', (req, res) => {
     const id = req.params.id;
@@ -153,8 +90,6 @@ app.delete('/food/:id', (req, res) => {
         }
     });
 });
-
-//middleware
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
